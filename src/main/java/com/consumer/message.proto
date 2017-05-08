@@ -1,0 +1,13 @@
+option java_outer_classname = "Protobuf";
+
+message Message {
+  required string name = 1;
+  optional Coordinate location = 2;
+  optional string photo = 3;
+}
+
+message Coordinate {
+  required double latitude = 1;
+  required double longitude = 2;
+}
+
