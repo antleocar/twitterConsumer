@@ -44,10 +44,8 @@ public class Consumer {
         for (MediaEntity entity : status.getMediaEntities()) {
           Protobuf.Message message = createMessage(status, entity);
           postData.postData(message.toByteArray());
-
         }
       }
-
     }
 
     @Override
