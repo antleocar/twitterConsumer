@@ -16,6 +16,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.LinkedBlockingQueue;
 import javax.annotation.PostConstruct;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import twitter4j.MediaEntity;
 import twitter4j.StallWarning;
@@ -34,12 +35,16 @@ public class Consumer {
   public static final Coordinate POSITIVE_EDGE = new Coordinate(73.985130, 40.758896);
   public static final Coordinate NEGATIVE_EDGE = new Coordinate(-73.985130, -40.758896);
 
+  private PostData postData;
+
   private StatusListener listener = new StatusListener() {
     @Override
     public void onStatus(Status status) {
       if (status.getFavoriteCount() > 2 && status.getMediaEntities().length > 0) {
         for (MediaEntity entity : status.getMediaEntities()) {
           Protobuf.Message message = createMessage(status, entity);
+          postData.postData(message.toByteArray());
+
         }
       }
 
